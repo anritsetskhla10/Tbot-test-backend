@@ -2,12 +2,13 @@ import express  from "express";
 import cors from "cors";
 import admin from "firebase-admin";
 import dotenv from "dotenv";
+import fs from "fs";
 
 dotenv.config();
 
 
 // Initialize Firebase Admin SDK
-import serviceAccount from "./serviceData.json" assert { type: "json" };
+const serviceAccount = JSON.parse(fs.readFileSync("./serviceData.json", "utf8"));
 
 
 admin.initializeApp({
@@ -41,4 +42,6 @@ app.post("/generate-token", async (req, res) => {
 });
 
 // Set server to listen on port 5000
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () =>{
+    console.log("server runnig port 3000")
+});
