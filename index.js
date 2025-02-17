@@ -8,13 +8,13 @@ dotenv.config();
 
 
 // Initialize Firebase Admin SDK
-const serviceAccount = JSON.parse(fs.readFileSync("./serviceData.json", "utf8"));
+const serviceAccount = require("./serviceData.json");;
 
+console.log(serviceAccount);
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
+    credential: admin.credential.cert(JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS, "utf8"))),
+  });
 const app = express();
 app.use(cors());
 app.use(express.json()); // Parse JSON request bodies
@@ -42,6 +42,4 @@ app.post("/generate-token", async (req, res) => {
 });
 
 // Set server to listen on port 5000
-app.listen(process.env.PORT || 3000, () =>{
-    console.log("server runnig port 3000")
-});
+app.listen(process.env.PORT || 3000);
