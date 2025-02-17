@@ -48,7 +48,7 @@ app.post("/generate-token", async (req, res) => {
     res.json({ firebase_token: customToken });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error creating custom token" });
+    res.status(404).json({ error: "Error creating custom token" });
   }
 });
 
