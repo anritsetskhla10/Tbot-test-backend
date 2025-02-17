@@ -3,17 +3,18 @@ import cors from "cors";
 import admin from "firebase-admin";
 import dotenv from "dotenv";
 import fs from "fs";
+import serviceAccount from "./serviceData.json";
 
 dotenv.config();
 
 
-// Initialize Firebase Admin SDK
-// const serviceAccount = require("./serviceData.json");
+
+
 
 
 
 admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS, "utf8"))),
+    credential: admin.credential.cert(JSON.parse(fs.readFileSync(serviceAccount, "utf8"))),
   });
 const app = express();
 app.use(cors());
