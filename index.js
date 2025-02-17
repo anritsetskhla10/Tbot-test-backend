@@ -7,9 +7,8 @@ dotenv.config();
 
 
 // Initialize Firebase Admin SDK
-const serviceAccount = require("./serviceData.json");;
+import serviceAccount from "./serviceData.json" assert { type: "json" };
 
-console.log(serviceAccount);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
