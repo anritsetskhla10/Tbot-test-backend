@@ -7,14 +7,8 @@ import serviceAccount from "./serviceData.json";
 
 dotenv.config();
 
-
-
-
-
-
-
 admin.initializeApp({
-    credential: admin.credential.cert(JSON.parse(fs.readFileSync(serviceAccount, "utf8"))),
+    credential: admin.credential.cert(JSON.parse(fs.readFile(serviceAccount, "utf8"))),
   });
 const app = express();
 app.use(cors());
