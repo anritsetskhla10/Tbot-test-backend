@@ -39,20 +39,24 @@ app.get("/", (req, res) => {
 
 // Custom Token Generation Endpoint
 app.post("/generate-token", async (req, res) => {
+  console.log("Received request at /generate-token:", req.body);
+
   const { telegram_id } = req.body;
-  
-  if (telegram_id) {
+  if (!telegram_id) {
+    console.error("Missing telegram_id");
     return res.status(400).json({ error: "Telegram ID is required" });
   }
 
   try {
     const customToken = await admin.auth().createCustomToken(telegram_id);
+    console.log("Generated Firebase Token:", customToken);
     res.json({ firebase_token: customToken });
   } catch (error) {
-    console.error(error);
+    console.error("Error creating custom token:", error);
     res.status(404).json({ error: "Error creating custom token" });
   }
 });
+
 
 // Set server to listen on port 5000
 const PORT = process.env.PORT || 3000;
