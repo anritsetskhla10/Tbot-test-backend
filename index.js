@@ -2,7 +2,6 @@ import express  from "express";
 import cors from "cors";
 import admin from "firebase-admin";
 import dotenv from "dotenv";
-import fs from "fs";
 // import serviceAccount from "./serviceData.json";
 
 
@@ -22,6 +21,8 @@ const serviceAccount = {
   client_x509_cert_url: process.env.client_x509_cert_url,
   universe_domain: process.env.universe_domain
 }
+ 
+
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -35,11 +36,12 @@ app.get("/", (req, res) => {
   res.send("Backend Server is Running!");
 });
 
+
 // Custom Token Generation Endpoint
 app.post("/generate-token", async (req, res) => {
   const { telegram_id } = req.body;
   
-  if (!telegram_id) {
+  if (telegram_id) {
     return res.status(400).json({ error: "Telegram ID is required" });
   }
 
