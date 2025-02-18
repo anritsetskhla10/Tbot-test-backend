@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: todoList
+  description: todoList app API
+  version: 0.1.9
+
+servers:
+  - url: https://todo-backend-app.up.railway.app/api
+    description: Production server
+  - url: http://localhost:3000/api
+    description: Local server
+
+paths:
+  /todoList:
+    get:
+      tags:
+        - todoList
+      responses:
+        "200":
+          description: Successfully fetched
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /sendTodo:
+    post:
+      tags:
+        - Todo
+      requestBody:
+        description: Add todo
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                status:
+                  type: boolean
+      responses:
+        "200":
+          description: ToDo added successfully
+
+  /updateTodo/{id}:
+    put:
+      summary: Update a ToDo item
+      tags:
+        - Update Todo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: body
+          name: todo
+          description: Updated todo object
+          required: true
+          schema:
+            type: object
+            properties:
+              status:
+                type: boolean
+      responses:
+        "200":
+          description: ToDo updated successfully
+  /deleteTodo/{id}:
+    delete:
+      tags:
+        - todo
+      summary: Deletes a todo item
+      operationId: deleteTodo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Todo deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /deletedInactive:
+    delete:
+      tags:
+        - delete todoes
+      summary: Delete todos with status false
+      description: Deletes all todos with status set to false.
+      responses:
+        "201":
+          description: Todo deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Todo deleted successfully
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
